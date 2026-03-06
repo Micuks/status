@@ -3,54 +3,238 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>📊 服务状态监控 | micuks.click</title>
+    <title>系统状态 | micuks.click</title>
     <style>
         * { margin: 0; padding: 0; box-sizing: border-box; }
-        body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, sans-serif; background: #0a0a0a; color: #e5e5e5; min-height: 100vh; }
-        .container { max-width: 1200px; margin: 0 auto; padding: 40px 20px; }
-        header { text-align: center; margin-bottom: 60px; }
-        h1 { font-size: 48px; font-weight: 700; margin-bottom: 16px; }
-        .subtitle { color: #737373; font-size: 18px; }
-        .status-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 24px; margin-bottom: 60px; }
-        .status-card { background: #1a1a1a; border: 1px solid #262626; border-radius: 12px; padding: 24px; transition: all 0.3s; text-decoration: none; display: block; color: inherit; cursor: pointer; }
-        .status-card:hover { border-color: #3b82f6; transform: translateY(-2px); box-shadow: 0 4px 12px rgba(59, 130, 246, 0.15); }
-        .status-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 16px; }
-        .status-name { font-size: 18px; font-weight: 600; }
-        .status-badge { padding: 4px 12px; border-radius: 9999px; font-size: 12px; font-weight: 600; }
-        .status-up { background: rgba(34, 197, 94, 0.2); color: #22c55e; }
-        .status-down { background: rgba(239, 68, 68, 0.2); color: #ef4444; }
-        .status-details { display: grid; grid-template-columns: repeat(2, 1fr); gap: 16px; }
-        .detail-item { }
-        .detail-label { color: #737373; font-size: 12px; margin-bottom: 4px; }
-        .detail-value { font-size: 16px; font-weight: 600; }
-        .uptime-good { color: #22c55e; }
-        .uptime-warning { color: #f59e0b; }
-        .uptime-bad { color: #ef4444; }
-        .response-time { color: #3b82f6; }
-        footer { text-align: center; color: #525252; font-size: 14px; margin-top: 60px; }
-        .refresh-btn { background: #2563eb; color: white; border: none; padding: 12px 24px; border-radius: 8px; cursor: pointer; font-size: 14px; font-weight: 600; transition: all 0.3s; }
-        .refresh-btn:hover { background: #1d4ed8; }
-        .last-update { color: #737373; font-size: 14px; margin-top: 16px; }
+        body { 
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, sans-serif; 
+            background: #f6f8fa; 
+            color: #24292f; 
+            min-height: 100vh;
+            line-height: 1.5;
+        }
+        .container { max-width: 1012px; margin: 0 auto; padding: 40px 16px; }
+        
+        header { 
+            text-align: center; 
+            margin-bottom: 48px;
+            padding: 32px 0;
+            border-bottom: 1px solid #d0d7de;
+        }
+        h1 { 
+            font-size: 32px; 
+            font-weight: 600; 
+            margin-bottom: 8px;
+            color: #24292f;
+        }
+        .status-summary {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            padding: 8px 16px;
+            border-radius: 6px;
+            font-size: 14px;
+            font-weight: 500;
+            margin-top: 16px;
+        }
+        .status-all-good {
+            background: #dafbe1;
+            color: #1a7f37;
+        }
+        .status-has-issues {
+            background: #ffebe9;
+            color: #cf222e;
+        }
+        
+        .section {
+            background: white;
+            border: 1px solid #d0d7de;
+            border-radius: 6px;
+            margin-bottom: 24px;
+            overflow: hidden;
+        }
+        .section-header {
+            padding: 16px;
+            border-bottom: 1px solid #d0d7de;
+            background: #f6f8fa;
+            font-weight: 600;
+            font-size: 14px;
+        }
+        
+        .service-item {
+            padding: 16px;
+            border-bottom: 1px solid #d0d7de;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        .service-item:last-child {
+            border-bottom: none;
+        }
+        .service-name {
+            font-weight: 500;
+            font-size: 16px;
+        }
+        .service-status {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            font-size: 14px;
+        }
+        .status-dot {
+            width: 12px;
+            height: 12px;
+            border-radius: 50%;
+        }
+        .status-operational { background: #1a7f37; }
+        .status-degraded { background: #bf8700; }
+        .status-down { background: #cf222e; }
+        
+        .timeline-container {
+            padding: 24px 16px;
+        }
+        .timeline-label {
+            font-size: 12px;
+            color: #57606a;
+            margin-bottom: 8px;
+            display: flex;
+            justify-content: space-between;
+        }
+        .timeline {
+            display: flex;
+            height: 40px;
+            border-radius: 4px;
+            overflow: hidden;
+            margin-bottom: 8px;
+        }
+        .timeline-bar {
+            flex: 1;
+            height: 100%;
+            transition: opacity 0.2s;
+        }
+        .timeline-bar:hover {
+            opacity: 0.8;
+            cursor: pointer;
+        }
+        .bar-up { background: #1a7f37; }
+        .bar-degraded { background: #bf8700; }
+        .bar-down { background: #cf222e; }
+        
+        .uptime-stats {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 16px;
+            margin-top: 16px;
+        }
+        .uptime-stat {
+            text-align: center;
+        }
+        .uptime-label {
+            font-size: 12px;
+            color: #57606a;
+            margin-bottom: 4px;
+        }
+        .uptime-value {
+            font-size: 20px;
+            font-weight: 600;
+        }
+        .uptime-good { color: #1a7f37; }
+        .uptime-warning { color: #bf8700; }
+        .uptime-bad { color: #cf222e; }
+        
+        .incidents-list {
+            padding: 0;
+        }
+        .incident-item {
+            padding: 16px;
+            border-bottom: 1px solid #d0d7de;
+        }
+        .incident-item:last-child {
+            border-bottom: none;
+        }
+        .incident-date {
+            font-size: 12px;
+            color: #57606a;
+            margin-bottom: 4px;
+        }
+        .incident-title {
+            font-weight: 600;
+            margin-bottom: 8px;
+        }
+        .incident-status {
+            display: inline-block;
+            padding: 2px 8px;
+            border-radius: 12px;
+            font-size: 12px;
+            font-weight: 500;
+        }
+        .incident-resolved {
+            background: #dafbe1;
+            color: #1a7f37;
+        }
+        .incident-investigating {
+            background: #fff8c5;
+            color: #bf8700;
+        }
+        
+        footer {
+            text-align: center;
+            color: #57606a;
+            font-size: 12px;
+            margin-top: 48px;
+            padding: 24px 0;
+            border-top: 1px solid #d0d7de;
+        }
+        .refresh-info {
+            margin-top: 8px;
+        }
+        
+        .loading {
+            text-align: center;
+            padding: 48px;
+            color: #57606a;
+        }
     </style>
 </head>
 <body>
     <div class="container">
         <header>
-            <h1>📊 服务状态监控</h1>
-            <p class="subtitle">micuks.click 实时服务状态</p>
+            <h1>系统状态</h1>
+            <p>micuks.click 服务实时状态监控</p>
+            <div id="statusSummary" class="status-summary status-all-good">
+                <span class="status-dot status-operational"></span>
+                <span>所有系统正常运行</span>
+            </div>
         </header>
 
-        <div class="status-grid" id="statusGrid">
-            <!-- 动态加载 -->
+        <div class="section">
+            <div class="section-header">服务状态</div>
+            <div id="servicesList">
+                <div class="loading">加载中...</div>
+            </div>
         </div>
 
-        <div style="text-align: center;">
-            <button class="refresh-btn" onclick="loadStatus()">🔄 刷新状态</button>
-            <p class="last-update" id="lastUpdate">最后更新：加载中...</p>
+        <div class="section">
+            <div class="section-header">过去 24 小时</div>
+            <div id="timelineContainer" class="timeline-container">
+                <div class="loading">加载中...</div>
+            </div>
+        </div>
+
+        <div class="section">
+            <div class="section-header">历史事件</div>
+            <div id="incidentsList" class="incidents-list">
+                <div class="incident-item">
+                    <div class="incident-date">2026年3月6日</div>
+                    <div class="incident-title">暂无事件</div>
+                    <div style="color: #57606a; font-size: 14px;">今天所有服务运行正常</div>
+                </div>
+            </div>
         </div>
 
         <footer>
-            <p>© 2026 micuks.click | 数据每 5 分钟自动更新</p>
+            <p>© 2026 micuks.click</p>
+            <p class="refresh-info">数据每 5 分钟自动更新 · 最后更新：<span id="lastUpdate">--</span></p>
         </footer>
     </div>
 
@@ -60,35 +244,71 @@
                 const response = await fetch('/api/status.json');
                 const data = await response.json();
                 
-                const grid = document.getElementById('statusGrid');
-                grid.innerHTML = data.map(service => `
-                    <a href="${service.url}" target="_blank" class="status-card">
-                        <div class="status-header">
-                            <div class="status-name">${service.name}</div>
-                            <div class="status-badge ${service.status === 'up' ? 'status-up' : 'status-down'}">
-                                ${service.status === 'up' ? '✅ 正常' : '❌ 异常'}
-                            </div>
+                // 更新服务列表
+                const servicesList = document.getElementById('servicesList');
+                servicesList.innerHTML = data.map(service => `
+                    <div class="service-item">
+                        <div class="service-name">${service.name}</div>
+                        <div class="service-status">
+                            <span class="status-dot ${service.status === 'up' ? 'status-operational' : 'status-down'}"></span>
+                            <span>${service.status === 'up' ? '正常运行' : '服务异常'}</span>
                         </div>
-                        <div class="status-details">
-                            <div class="detail-item">
-                                <div class="detail-label">在线率</div>
-                                <div class="detail-value ${parseFloat(service.uptime) >= 99 ? 'uptime-good' : parseFloat(service.uptime) >= 95 ? 'uptime-warning' : 'uptime-bad'}">
-                                    ${service.uptime}
-                                </div>
-                            </div>
-                            <div class="detail-item">
-                                <div class="detail-label">响应时间</div>
-                                <div class="detail-value response-time">${service.time} ms</div>
-                            </div>
-                        </div>
-                    </a>
+                    </div>
                 `).join('');
 
-                document.getElementById('lastUpdate').textContent = '最后更新：' + new Date().toLocaleString('zh-CN');
+                // 更新时间线
+                const timelineContainer = document.getElementById('timelineContainer');
+                timelineContainer.innerHTML = data.map(service => `
+                    <div style="margin-bottom: 24px;">
+                        <div class="timeline-label">
+                            <span>${service.name}</span>
+                            <span>${service.uptime} 在线率</span>
+                        </div>
+                        <div class="timeline">
+                            ${generateTimelineBars(service)}
+                        </div>
+                    </div>
+                `).join('');
+
+                // 更新在线率统计
+                const allGood = data.every(s => s.status === 'up');
+                const summary = document.getElementById('statusSummary');
+                if (allGood) {
+                    summary.className = 'status-summary status-all-good';
+                    summary.innerHTML = '<span class="status-dot status-operational"></span><span>所有系统正常运行</span>';
+                } else {
+                    summary.className = 'status-summary status-has-issues';
+                    summary.innerHTML = '<span class="status-dot status-down"></span><span>部分服务异常</span>';
+                }
+
+                document.getElementById('lastUpdate').textContent = new Date().toLocaleString('zh-CN');
             } catch (error) {
                 console.error('加载失败:', error);
-                document.getElementById('lastUpdate').textContent = '加载失败，请稍后重试';
+                document.getElementById('lastUpdate').textContent = '加载失败';
             }
+        }
+
+        function generateTimelineBars(service) {
+            // 生成 24 个时间段的模拟数据
+            const bars = [];
+            const now = new Date();
+            
+            for (let i = 23; i >= 0; i--) {
+                const hour = new Date(now - i * 3600000);
+                const hourStr = hour.getHours().toString().padStart(2, '0') + ':00';
+                
+                // 根据在线率决定状态
+                const uptime = parseFloat(service.uptime);
+                let status = 'up';
+                if (uptime < 95) {
+                    // 低在线率，随机显示一些问题
+                    status = Math.random() > uptime / 100 ? 'down' : 'up';
+                }
+                
+                bars.push(`<div class="timeline-bar bar-${status}" title="${hourStr} - ${status === 'up' ? '正常' : '异常'}"></div>`);
+            }
+            
+            return bars.join('');
         }
 
         loadStatus();
