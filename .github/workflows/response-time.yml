@@ -1,0 +1,25 @@
+name: Response Time CI
+on:
+  schedule:
+    - cron: "0 23 * * *"
+  repository_dispatch:
+    types: [response_time]
+  workflow_dispatch:
+
+jobs:
+  release:
+    name: Response time graphs
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v3
+        with:
+          ref: ${{ github.head_ref }}
+          token: ${{ secrets.GITHUB_TOKEN }}
+      
+      - name: Response Time
+        uses: upptime/uptime-monitor@master
+        with:
+          command: "response-time"
+        env:
+          GH_PAT: ${{ secrets.GITHUB_TOKEN }}

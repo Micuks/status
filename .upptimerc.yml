@@ -1,0 +1,30 @@
+owner: Micuks
+repo: status
+sites:
+  - name: 配色推荐器
+    url: https://palette.micuks.click
+  - name: AI投资组合
+    url: https://investment.micuks.click
+  - name: 学术配色后端
+    url: https://palette.micuks.click/api/palettes
+  - name: AI投资后端
+    url: https://investment.micuks.click/api/investment
+status-website:
+  cname: status.micuks.click
+  logoUrl: https://raw.githubusercontent.com/upptime/upptime.js.org/master/static/img/icon.svg
+  name: 服务状态监控
+  introTitle: "micuks.click 服务状态"
+  introMessage: 实时监控各项服务的运行状态
+  navbar:
+    - title: 状态
+      href: /
+    - title: GitHub
+      href: https://github.com/$OWNER/$REPO
+workflowSchedule:
+  graphs: "0 0 * * *"
+  responseTime: "0 23 * * *"
+  staticSite: "0 1 * * *"
+  summary: "0 0,6,12,18 * * *"
+  updateTemplate: "0 0 * * *"
+  updates: "0 3 * * *"
+  uptime: "*/5 * * * *"
