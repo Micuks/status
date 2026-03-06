@@ -22,4 +22,4 @@ jobs:
         with:
           command: "site"
         env:
-          GH_PAT: ${{ secrets.GITHUB_TOKEN }}
+          GH_PAT: ${{ secrets.GH_PAT }}
