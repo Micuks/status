@@ -12,8 +12,8 @@
         h1 { font-size: 48px; font-weight: 700; margin-bottom: 16px; }
         .subtitle { color: #737373; font-size: 18px; }
         .status-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 24px; margin-bottom: 60px; }
-        .status-card { background: #1a1a1a; border: 1px solid #262626; border-radius: 12px; padding: 24px; transition: all 0.3s; }
-        .status-card:hover { border-color: #404040; transform: translateY(-2px); }
+        .status-card { background: #1a1a1a; border: 1px solid #262626; border-radius: 12px; padding: 24px; transition: all 0.3s; text-decoration: none; display: block; color: inherit; cursor: pointer; }
+        .status-card:hover { border-color: #3b82f6; transform: translateY(-2px); box-shadow: 0 4px 12px rgba(59, 130, 246, 0.15); }
         .status-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 16px; }
         .status-name { font-size: 18px; font-weight: 600; }
         .status-badge { padding: 4px 12px; border-radius: 9999px; font-size: 12px; font-weight: 600; }
@@ -62,7 +62,7 @@
                 
                 const grid = document.getElementById('statusGrid');
                 grid.innerHTML = data.map(service => `
-                    <div class="status-card">
+                    <a href="${service.url}" target="_blank" class="status-card">
                         <div class="status-header">
                             <div class="status-name">${service.name}</div>
                             <div class="status-badge ${service.status === 'up' ? 'status-up' : 'status-down'}">
@@ -81,7 +81,7 @@
                                 <div class="detail-value response-time">${service.time} ms</div>
                             </div>
                         </div>
-                    </div>
+                    </a>
                 `).join('');
 
                 document.getElementById('lastUpdate').textContent = '最后更新：' + new Date().toLocaleString('zh-CN');
