@@ -222,13 +222,6 @@
         </div>
 
         <div class="section">
-            <div class="section-header">过去 24 小时</div>
-            <div id="timelineContainer" class="timeline-container">
-                <div class="loading">加载中...</div>
-            </div>
-        </div>
-
-        <div class="section">
             <div class="section-header">历史事件</div>
             <div id="incidentsList" class="incidents-list">
                 <div class="incident-item">
@@ -255,26 +248,23 @@
                 const servicesList = document.getElementById('servicesList');
                 servicesList.innerHTML = data.map(service => `
                     <a href="${service.url}" target="_blank" class="service-item">
-                        <div class="service-name">${service.name}</div>
+                        <div style="flex: 1;">
+                            <div class="service-name">${service.name}</div>
+                            <div style="margin-top: 12px;">
+                                <div class="timeline-label">
+                                    <span style="font-size: 12px; color: #57606a;">过去 24 小时</span>
+                                    <span style="font-size: 12px; color: #57606a;">${service.uptime} 在线率</span>
+                                </div>
+                                <div class="timeline">
+                                    ${generateTimelineBars(service)}
+                                </div>
+                            </div>
+                        </div>
                         <div class="service-status">
                             <span class="status-dot ${service.status === 'up' ? 'status-operational' : 'status-down'}"></span>
                             <span>${service.status === 'up' ? '正常运行' : '服务异常'}</span>
                         </div>
                     </a>
-                `).join('');
-
-                // 更新时间线
-                const timelineContainer = document.getElementById('timelineContainer');
-                timelineContainer.innerHTML = data.map(service => `
-                    <div style="margin-bottom: 24px;">
-                        <div class="timeline-label">
-                            <span>${service.name}</span>
-                            <span>${service.uptime} 在线率</span>
-                        </div>
-                        <div class="timeline">
-                            ${generateTimelineBars(service)}
-                        </div>
-                    </div>
                 `).join('');
 
                 // 更新在线率统计
