@@ -1,0 +1,78 @@
+[
+  {
+    "name": "配色推荐器",
+    "url": "https://palette.micuks.click",
+    "icon": "https://icons.duckduckgo.com/ip3/palette.micuks.click.ico",
+    "slug": "",
+    "status": "up",
+    "uptime": "0.00%",
+    "uptimeDay": "0.00%",
+    "uptimeWeek": "0.00%",
+    "uptimeMonth": "0.00%",
+    "uptimeYear": "0.00%",
+    "time": 531,
+    "timeDay": 531,
+    "timeWeek": 531,
+    "timeMonth": 531,
+    "timeYear": 531,
+    "dailyMinutesDown": {
+      "2026-03-06": 20
+    }
+  },
+  {
+    "name": "AI投资组合",
+    "url": "https://investment.micuks.click",
+    "icon": "https://icons.duckduckgo.com/ip3/investment.micuks.click.ico",
+    "slug": "ai",
+    "status": "up",
+    "uptime": "100.00%",
+    "uptimeDay": "100.00%",
+    "uptimeWeek": "100.00%",
+    "uptimeMonth": "100.00%",
+    "uptimeYear": "100.00%",
+    "time": 495,
+    "timeDay": 495,
+    "timeWeek": 495,
+    "timeMonth": 495,
+    "timeYear": 495,
+    "dailyMinutesDown": {}
+  },
+  {
+    "name": "学术配色后端",
+    "url": "https://palette.micuks.click/api/palettes",
+    "icon": "https://icons.duckduckgo.com/ip3/palette.micuks.click.ico",
+    "slug": "",
+    "status": "up",
+    "uptime": "0.00%",
+    "uptimeDay": "0.00%",
+    "uptimeWeek": "0.00%",
+    "uptimeMonth": "0.00%",
+    "uptimeYear": "0.00%",
+    "time": 531,
+    "timeDay": 531,
+    "timeWeek": 531,
+    "timeMonth": 531,
+    "timeYear": 531,
+    "dailyMinutesDown": {
+      "2026-03-06": 20
+    }
+  },
+  {
+    "name": "AI投资后端",
+    "url": "https://investment.micuks.click/api/investment",
+    "icon": "https://icons.duckduckgo.com/ip3/investment.micuks.click.ico",
+    "slug": "ai",
+    "status": "up",
+    "uptime": "100.00%",
+    "uptimeDay": "100.00%",
+    "uptimeWeek": "100.00%",
+    "uptimeMonth": "100.00%",
+    "uptimeYear": "100.00%",
+    "time": 495,
+    "timeDay": 495,
+    "timeWeek": 495,
+    "timeMonth": 495,
+    "timeYear": 495,
+    "dailyMinutesDown": {}
+  }
+]
