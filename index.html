@@ -67,6 +67,13 @@
             display: flex;
             justify-content: space-between;
             align-items: center;
+            cursor: pointer;
+            text-decoration: none;
+            color: inherit;
+            transition: background 0.2s;
+        }
+        .service-item:hover {
+            background: #f6f8fa;
         }
         .service-item:last-child {
             border-bottom: none;
@@ -247,13 +254,13 @@
                 // 更新服务列表
                 const servicesList = document.getElementById('servicesList');
                 servicesList.innerHTML = data.map(service => `
-                    <div class="service-item">
+                    <a href="${service.url}" target="_blank" class="service-item">
                         <div class="service-name">${service.name}</div>
                         <div class="service-status">
                             <span class="status-dot ${service.status === 'up' ? 'status-operational' : 'status-down'}"></span>
                             <span>${service.status === 'up' ? '正常运行' : '服务异常'}</span>
                         </div>
-                    </div>
+                    </a>
                 `).join('');
 
                 // 更新时间线
