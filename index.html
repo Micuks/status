@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>📊 服务状态监控 | micuks.click</title>
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, sans-serif; background: #0a0a0a; color: #e5e5e5; min-height: 100vh; }
+        .container { max-width: 1200px; margin: 0 auto; padding: 40px 20px; }
+        header { text-align: center; margin-bottom: 60px; }
+        h1 { font-size: 48px; font-weight: 700; margin-bottom: 16px; }
+        .subtitle { color: #737373; font-size: 18px; }
+        .status-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 24px; margin-bottom: 60px; }
+        .status-card { background: #1a1a1a; border: 1px solid #262626; border-radius: 12px; padding: 24px; transition: all 0.3s; }
+        .status-card:hover { border-color: #404040; transform: translateY(-2px); }
+        .status-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 16px; }
+        .status-name { font-size: 18px; font-weight: 600; }
+        .status-badge { padding: 4px 12px; border-radius: 9999px; font-size: 12px; font-weight: 600; }
+        .status-up { background: rgba(34, 197, 94, 0.2); color: #22c55e; }
+        .status-down { background: rgba(239, 68, 68, 0.2); color: #ef4444; }
+        .status-details { display: grid; grid-template-columns: repeat(2, 1fr); gap: 16px; }
+        .detail-item { }
+        .detail-label { color: #737373; font-size: 12px; margin-bottom: 4px; }
+        .detail-value { font-size: 16px; font-weight: 600; }
+        .uptime-good { color: #22c55e; }
+        .uptime-warning { color: #f59e0b; }
+        .uptime-bad { color: #ef4444; }
+        .response-time { color: #3b82f6; }
+        footer { text-align: center; color: #525252; font-size: 14px; margin-top: 60px; }
+        .refresh-btn { background: #2563eb; color: white; border: none; padding: 12px 24px; border-radius: 8px; cursor: pointer; font-size: 14px; font-weight: 600; transition: all 0.3s; }
+        .refresh-btn:hover { background: #1d4ed8; }
+        .last-update { color: #737373; font-size: 14px; margin-top: 16px; }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>📊 服务状态监控</h1>
+            <p class="subtitle">micuks.click 实时服务状态</p>
+        </header>
+
+        <div class="status-grid" id="statusGrid">
+            <!-- 动态加载 -->
+        </div>
+
+        <div style="text-align: center;">
+            <button class="refresh-btn" onclick="loadStatus()">🔄 刷新状态</button>
+            <p class="last-update" id="lastUpdate">最后更新：加载中...</p>
+        </div>
+
+        <footer>
+            <p>© 2026 micuks.click | 数据每 5 分钟自动更新</p>
+        </footer>
+    </div>
+
+    <script>
+        async function loadStatus() {
+            try {
+                const response = await fetch('/api/status.json');
+                const data = await response.json();
+                
+                const grid = document.getElementById('statusGrid');
+                grid.innerHTML = data.map(service => `
+                    <div class="status-card">
+                        <div class="status-header">
+                            <div class="status-name">${service.name}</div>
+                            <div class="status-badge ${service.status === 'up' ? 'status-up' : 'status-down'}">
+                                ${service.status === 'up' ? '✅ 正常' : '❌ 异常'}
+                            </div>
+                        </div>
+                        <div class="status-details">
+                            <div class="detail-item">
+                                <div class="detail-label">在线率</div>
+                                <div class="detail-value ${parseFloat(service.uptime) >= 99 ? 'uptime-good' : parseFloat(service.uptime) >= 95 ? 'uptime-warning' : 'uptime-bad'}">
+                                    ${service.uptime}
+                                </div>
+                            </div>
+                            <div class="detail-item">
+                                <div class="detail-label">响应时间</div>
+                                <div class="detail-value response-time">${service.time} ms</div>
+                            </div>
+                        </div>
+                    </div>
+                `).join('');
+
+                document.getElementById('lastUpdate').textContent = '最后更新：' + new Date().toLocaleString('zh-CN');
+            } catch (error) {
+                console.error('加载失败:', error);
+                document.getElementById('lastUpdate').textContent = '加载失败，请稍后重试';
+            }
+        }
+
+        loadStatus();
+        setInterval(loadStatus, 60000);
+    </script>
+</body>
+</html>
