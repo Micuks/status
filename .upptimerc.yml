@@ -9,6 +9,8 @@ sites:
     url: https://palette.micuks.click/api/palettes
   - name: AI投资后端
     url: https://investment.micuks.click/api/investment
+  - name: 五子棋
+    url: https://gomoku.micuks.click
 status-website:
   cname: status.micuks.click
   logoUrl: https://raw.githubusercontent.com/upptime/upptime.js.org/master/static/img/icon.svg
