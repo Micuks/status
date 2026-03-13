@@ -15,6 +15,8 @@ sites:
     url: https://investment.micuks.click/api/investment
   - name: 五子棋
     url: https://gomoku.micuks.click
+  - name: 俄罗斯方块
+    url: https://tetris.micuks.click
 status-website:
   cname: status.micuks.click
   logoUrl: https://raw.githubusercontent.com/upptime/upptime.js.org/master/static/img/icon.svg
