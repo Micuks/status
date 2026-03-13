@@ -1,5 +1,6 @@
 owner: Micuks
 repo: status
+token: GH_PAT
 sites:
   - name: 配色推荐器
     url: https://palette.micuks.click
