@@ -5,6 +5,8 @@ sites:
     url: https://palette.micuks.click
   - name: AI投资组合
     url: https://investment.micuks.click
+  - name: 象棋服务
+    url: https://xiangqi.micuks.click/api/pikafish/health
   - name: 学术配色后端
     url: https://palette.micuks.click/api/palettes
   - name: AI投资后端
