@@ -3,6 +3,8 @@ repo: status
 sites:
   - name: 配色推荐器
     url: https://palette.micuks.click
+  - name: 看看腿
+    url: https://kankan.micuks.click
   - name: AI投资组合
     url: https://investment.micuks.click
   - name: 象棋服务
