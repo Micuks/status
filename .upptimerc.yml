@@ -17,6 +17,8 @@ sites:
     url: https://gomoku.micuks.click
   - name: 俄罗斯方块
     url: https://tetris.micuks.click
+  - name: LLM服务
+    url: https://llm.micuks.click
 status-website:
   cname: status.micuks.click
   logoUrl: https://raw.githubusercontent.com/upptime/upptime.js.org/master/static/img/icon.svg
