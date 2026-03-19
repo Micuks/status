@@ -1,7 +1,7 @@
-url: https://palette.micuks.click
-status: up
-code: 200
-responseTime: 3103
-lastUpdated: 2026-03-19T17:41:04.101Z
+url: https://xiangqi.micuks.click/api/pikafish/health
+status: down
+code: 404
+responseTime: 605
+lastUpdated: 2026-03-19T17:41:07.832Z
 startTime: 2026-03-06T14:24:12.096Z
 generator: Upptime <https://github.com/upptime/upptime>
