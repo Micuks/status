@@ -1,7 +1,7 @@
-url: https://xiangqi.micuks.click/api/pikafish/health
-status: down
-code: 404
-responseTime: 223
-lastUpdated: 2026-03-20T23:00:23.290Z
+url: https://gomoku.micuks.click
+status: up
+code: 200
+responseTime: 215
+lastUpdated: 2026-03-20T23:00:25.470Z
 startTime: 2026-03-06T14:24:12.096Z
 generator: Upptime <https://github.com/upptime/upptime>
