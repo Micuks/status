@@ -22,6 +22,8 @@ sites:
     url: https://llm.micuks.click
   - name: 跳棋
     url: https://checkers.micuks.click
+  - name: Pastebin
+    url: https://paste.micuks.click
 status-website:
   cname: status.micuks.click
   logoUrl: https://raw.githubusercontent.com/upptime/upptime.js.org/master/static/img/icon.svg
